@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+            height: 50px;
+        }
+        .heading{
+            height: 108px;
+        }
+        body {
+            background-color: #333;
+            color: white;
+            font-family: "Poppins";
+        }
+
+        .container {
+            margin-top: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 600px;
+
+        }
+
+        form {
+            color: black;
+            background-color: white;
+            box-shadow: black 5px 5px 5px;
+            max-width: 480px;
+            padding: 30px;
+            padding-right: 70px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 17px;
+            border-radius: 10px;
+            border: 1px solid grey;
+            background-color: transparent;
+
+        }
+
+        input[type='submit'] {
+            color: white;
+            background: #333;
+            margin-top: 50px;
+            padding: 20px;
+            margin-left: 20px;
+            border-radius: 5px;
+
+        }
+
+        select {
+            width: 108%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid grey;
+            background-color: transparent;
+        }
+
+        @media (max-width:500px) {
+            h1 {
+                margin: 5;
+            }
+
+            form {
+                border-radius: 20px;
+                margin-top: 0px;
+
+            }
+
+            .container {
+                padding: 3px;
+                margin: 0;
+            }
+
+            input[type='submit'] {
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 17px;
+            }
+        }
+
+        #phoneInputWrapper {
+            display: flex;
+            align-items: center;
+            width: 108%;
+        }
+
+        #phoneCode {
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        #phoneNumber {
+            flex: 1;
+            width: 90%;
+        }
+        #r-label{
+                margin-left: 80px;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>CHESSHUB</h1>
+    </div>
+    
+    <div class="container">
+        <form action="/chesshub/signup-Auth-token" method="post">
+            <h1>Register</h1>
+            <label for="name">Enter full name</label>
+            <input type="text" placeholder="fullname"name="fullname">
+            <label for="username">Enter email</label>
+            <input type="email" placeholder="email" id="email" name="email">
+            <label for="username">username</label>
+            <input type="text" placeholder="username" id="username" name="username">
+
+            <label for="country">Select your country:</label>
+            <select id="country" name="country">
+                <option value="">Select Country</option>
+                <!-- Add more countries here -->
+            </select>
+            <label for="phoneNumber">Phone Number:</label>
+            <div id="phoneInputWrapper">
+                <span id="phoneCode" readonly>+1</span>
+                <input type="number" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number">
+            </div>
+
+            <label for="username1">Create password</label>
+            <input type="password" placeholder="password" id="password1" name="password">
+            <label for="password2">Create password</label>
+            <input type="password" placeholder="password" id="password2">
+            <p style="color: red; text-align: center;"><span id="error" style="color: red;"></span></p>
+            <input type="submit" id="login" value="Login">
+            <span id="r-label">Already have an account</span>
+            <a href="/login"> click to Login</a>
+        </form>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get('error');
+        label = document.querySelector("#error")
+        if (error) {
+            label.innerHTML = error
+        }
+
+
+       // Define country data with correct phone codes
+       const countryData = [
+            { name: "Afghanistan", code: "AF", phoneCode: "+93" },
+            { name: "Albania", code: "AL", phoneCode: "+355" },
+            { name: "Algeria", code: "DZ", phoneCode: "+213" },
+            { name: "American Samoa", code: "AS", phoneCode: "+1-684" },
+            { name: "Andorra", code: "AD", phoneCode: "+376" },
+            { name: "Namibia", code: "NA", phoneCode: "+264" }
+            // Add more countries and their codes here
+        ];
+
+        // Populate country dropdown
+        const countrySelect = document.getElementById('country');
+        countryData.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.code;
+            option.textContent = country.name;
+            countrySelect.appendChild(option);
+        });
+
+        // Update phone code based on selected country
+        countrySelect.addEventListener('change', (event) => {
+            const selectedCountryCode = event.target.value;
+            const selectedCountry = countryData.find(country => country.code === selectedCountryCode);
+            const phoneCodeSpan = document.getElementById('phoneCode');
+            if (selectedCountry) {
+                phoneCodeSpan.textContent = selectedCountry.phoneCode;
+            } else {
+                phoneCodeSpan.textContent = ''; // Clear the phone code if no country is selected
+            }
+        });
+        const password1 = document.getElementById('password1');
+        const password2 = document.getElementById('password2');
+        const form = document.querySelector('form');
+
+        form.addEventListener("submit", (event)=>{
+            document.querySelectorAll("input").forEach(inputField => {
+
+                if (inputField.value == ""){
+                    event.preventDefault();
+                    console.log(inputField)
+                    label.innerHTML = `Fill all area to register`
+                }
+            })
+
+            if (password1.value != "" && password2.value !=""){
+                if (password1.value===password2.value){
+                return
+            }
+            else{
+                event.preventDefault();
+                label.innerHTML = "Passwords don't match"
+            }
+            }
+        })
+
+        
+
+
+    </script>
+</body>
+
+</html>

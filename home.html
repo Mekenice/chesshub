@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Chess Game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #usernamelabel{
+            width: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">ChessHub</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="amounts">
+        <div class="side">
+            <img src="menu.png" alt="__" id="sidebaricon">
+        </div>
+        <div class="balance">
+            <p>bet: 5:00</p>
+            <p>Bal: $20.00</p>
+        </div>
+        <div id="usernamelabel">Welcome back, <span id="usernameDisplay"></span>!</div>
+    </div>
+    <div class="container">
+
+        <!-- left container -->
+        <div class="left">
+            <!-- network box section -->
+            <div class="Networkstate">
+                <h1 id="network">No game</h1>
+            </div>
+            <!-- left upper container -->
+            <div class="leftupper">
+                <div class="timer">
+                    <div>
+                        <img src="stopwatch.png" alt="">
+                    </div>
+                    <span id="time">10:0</span>
+                </div>
+                <!-- this container has show the wifi password -->
+                <div class="player">
+                    <input type="button" id="play" value="Play"><br>
+                    <span>stake</span>
+                    <input type="button" value="-" id="decr">
+                    <input type="number" value="5" id="stake">
+                    <input type="button" value="+" id="incr">
+                </div>
+            </div>
+
+            <div class="clients">
+                <h3> Opp:<span id="rival"> Reinhold</span><span id="side">Black</span></h3>
+            </div>
+            <div class="clients">
+                <h3> You:<span id="rival"> Meke</span><span id="side">White</span></h3>
+            </div>
+        </div>
+        <div class="chessboard"></div>
+        <div class="replace">
+            <img src="../pieces/wqueen.png" alt="white" class="change" piece-type="queen">
+            <img src="../pieces/wrook.png" alt="white" id="rook" class="change" piece-type="rook">
+            <img src="../pieces/wbishop.png" alt="white" class="change" piece-type="bishop">
+            <img src="../pieces/wknight.png" alt="white" class="change" piece-type="knight">
+
+        </div>
+        <!-- <div class="right">
+            <div class="upperright">
+                <form action="">
+                    <input type="text">
+                </form>
+            </div>
+            <div class="lowerright">
+                <div class="msgbox">
+                    <p>Hellow there</p>
+                    <p>Hi</p>
+                    <p>how is you?</p>
+                    <p>am good</p>
+                    <p>where are </p>
+                    <p>Namibia</p>
+                </div>
+                <div class="textfield">
+                    <input type="text" placeholder="Type something!">
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="sidebar">
+        <div class="logo">
+            <div class="log">
+                <h1>CHESSHUB GAME</h1>
+            </div>
+            <div class="back">
+                <img src="back.png" alt="back" id="back">
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Profile</li>
+                <li>History</li>
+                <li>Bets</li>
+                <li>Community</li>
+            </ul>
+        </nav>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
+    <script src="ajaxApi.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            background-color: #333;
+            color: white;
+            font-family: "Poppins";
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+
+        }
+
+        form {
+            color: black;
+            background-color: white;
+            box-shadow: black 5px 5px 5px;
+            max-width: 460px;
+            padding: 50px;
+            padding-right: 70px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 17px;
+            border-radius: 10px;
+            border: 1px solid grey;
+            background-color: transparent;
+
+        }
+
+        input[type='submit'] {
+            color: white;
+            background: #333;
+            margin-top: 50px;
+            padding: 20px;
+            margin-left: 20px;
+            border-radius: 5px;
+
+        }
+
+        #r-label {
+            margin-left: 80px;
+        }
+
+        @media (max-width:500px) {
+            h1 {
+                margin: 5;
+            }
+
+            form {
+                border-radius: 20px;
+                margin-top: 0px;
+
+            }
+
+            .container {
+                padding: 3px;
+                margin: 0;
+                height: 100%;
+            }
+
+            input[type='submit'] {
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 17px;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CHESSHUB</h1>
+    <div class="container">
+        <form action="/" method="post">
+            <h1>Login</h1>
+            <label for="username">Enter username</label>
+            <input type="text" placeholder="username, number or email" id="username" name="username">
+            <label for="password">Enter password</label>
+            <input type="password" placeholder="password" id="password" name="password">
+            <p style="color: red; text-align: center;"><span id="error" style="color: red;"></span></p>
+            <input type="submit" id="login">
+            <span id="r-label">Don't have an account</span>
+            <a href="/chesshub/signup-Auth-token"> click to Register</a>
+        </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get('error');
+        label = document.querySelector("#error")
+        if (error) {
+            label.innerHTML = error
+        }
+
+
+        
+    </script>
+</body>
+
+</html>
